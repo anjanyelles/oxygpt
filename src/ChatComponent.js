@@ -36,7 +36,7 @@ function ChatComponent() {
       try {
         const response = await axios.get('http://182.18.139.138:9001/api/student-service/user/getHistoryAgentsData?userId=00795e40-02e4-4bbd-871f-c35c779a106d');
         setHistory(response.data.slice(-10)); 
-        console.log(response.data);
+        console.log(response.data.slice(-10));
       } catch (error) {
         console.error('Error fetching chat history:', error);
       }
@@ -343,13 +343,23 @@ function ChatComponent() {
       <div className="chat-container">
         <aside className="history-panel">
           <h3>Chat History</h3>
+          {console.log(history)}
+
           <ul>
+             {history.map((message, index) => (
+              <li key={index} className={`${message.sender}-message`}>
+                {message.raisedQuestion}
+              </li>
+            ))}
+
+          </ul>
+          {/* <ul>
             {history.map((message, index) => (
               <li key={index} className={`${message.sender}-message`}>
                 {message.text}
               </li>
             ))}
-          </ul>
+          </ul> */}
           <button onClick={handleClearHistory} className="clear-history-button"><FaTrash/></button>
         </aside>
         <div className="chat-area">
